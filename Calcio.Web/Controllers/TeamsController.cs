@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Calcio.Web.Data;
+﻿using Calcio.Web.Data;
 using Calcio.Web.Data.Entities;
+using Calcio.Web.Helpers;
+using Calcio.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace Calcio.Web.Controllers
 {
     public class TeamsController : Controller
     {
         private readonly DataContext _context;
-
-        public TeamsController(DataContext context)
+        private readonly IImageHelper _imageHelper;
+        private readonly IConverterHelper _converterHelper;
+        public TeamsController(DataContext context, IImageHelper imageHelper, IConverterHelper converterHelper)
         {
             _context = context;
+            _imageHelper = imageHelper;
+            _converterHelper = converterHelper;
+
+
         }
 
         // GET: Teams
@@ -48,21 +52,39 @@ namespace Calcio.Web.Controllers
         {
             return View();
         }
-
-        // POST: Teams/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,LogoPath")] TeamEntity teamEntity)
+        public async Task<IActionResult> Create(TeamViewModel teamViewModel)
         {
             if (ModelState.IsValid)
             {
+                string path = string.Empty;
+                if (teamViewModel.LogoFile != null)
+                {
+                    path = await _imageHelper.UploadImageAsync(teamViewModel.LogoFile, "Teams");
+                }
+                TeamEntity teamEntity = _converterHelper.ToTeamEntity(teamViewModel, path, true);
+
                 _context.Add(teamEntity);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, $"Club con il nome {teamEntity.Name} già esistente");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, ex.InnerException.Message);
+                    }
+
+                }
             }
-            return View(teamEntity);
+            return View(teamViewModel);
         }
 
         // GET: Teams/Edit/5
@@ -78,42 +100,47 @@ namespace Calcio.Web.Controllers
             {
                 return NotFound();
             }
-            return View(teamEntity);
+            var teamViewModel = _converterHelper.ToTeamViewModel(teamEntity);
+            return View(teamViewModel);
         }
-
-        // POST: Teams/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,LogoPath")] TeamEntity teamEntity)
+        public async Task<IActionResult> Edit(int id, TeamViewModel teamViewModel)
         {
-            if (id != teamEntity.Id)
+            if (id != teamViewModel.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+                string path = teamViewModel.LogoPath;
+                if (teamViewModel.LogoFile != null)
+                {
+                    path = await _imageHelper.UploadImageAsync(teamViewModel.LogoFile, "Teams");
+                }
+                TeamEntity teamEntity = _converterHelper.ToTeamEntity(teamViewModel, path, false);
+
+                _context.Update(teamEntity);
                 try
                 {
-                    _context.Update(teamEntity);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception ex)
                 {
-                    if (!TeamEntityExists(teamEntity.Id))
+                    if (ex.InnerException.Message.Contains("duplicate"))
                     {
-                        return NotFound();
+                        ModelState.AddModelError(string.Empty, $"Club con il nome: {teamEntity.Name}. già esistente");
                     }
                     else
                     {
-                        throw;
+                        ModelState.AddModelError(string.Empty, ex.InnerException.Message);
                     }
+
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(teamEntity);
+            return View(teamViewModel);
         }
 
         // GET: Teams/Delete/5
@@ -131,23 +158,9 @@ namespace Calcio.Web.Controllers
                 return NotFound();
             }
 
-            return View(teamEntity);
-        }
-
-        // POST: Teams/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var teamEntity = await _context.Teams.FindAsync(id);
             _context.Teams.Remove(teamEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool TeamEntityExists(int id)
-        {
-            return _context.Teams.Any(e => e.Id == id);
         }
     }
 }
