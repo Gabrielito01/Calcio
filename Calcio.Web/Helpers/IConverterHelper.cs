@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Calcio.Common.Models;
 using Calcio.Web.Data.Entities;
 using Calcio.Web.Models;
 
@@ -26,6 +27,11 @@ namespace Calcio.Web.Helpers
         Task<MatchEntity> ToMatchEntityAsync(MatchViewModel model, bool isNew);
 
         MatchViewModel ToMatchViewModel(MatchEntity matchEntity);
+
+        TournamentResponse ToTournamentResponse(TournamentEntity tournamentEntity);
+
+        List<TournamentResponse> ToTournamentResponse(List<TournamentEntity> tournamentEntities);
+
 
 
     }

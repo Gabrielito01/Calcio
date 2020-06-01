@@ -51,6 +51,9 @@ namespace Calcio.Web
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddDbContext<CalcioWebContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("CalcioWebContext")));
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
