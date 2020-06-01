@@ -15,5 +15,7 @@ namespace Calcio.Web.Data.Entities
         public string Name{ get; set; }
         [Display(Name="Logo")]
         public string LogoPath{ get; set; }
+
+        public ICollection<UserEntity> Users { get; set; }
     }
 }

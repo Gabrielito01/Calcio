@@ -1,4 +1,5 @@
 ﻿using Calcio.Web.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Calcio.Web.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<UserEntity>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -19,6 +20,7 @@ namespace Calcio.Web.Data
         public DbSet<GroupEntity> Groups { get; set; }
 
         public DbSet<MatchEntity> Matches { get; set; }
+        public DbSet<PredictionEntity> Predictions { get; set; }
 
         public DbSet<TournamentEntity> Tournaments { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
