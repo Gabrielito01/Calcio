@@ -75,12 +75,12 @@ namespace Calcio.Web.Data
                 var startDate = DateTime.Today.AddMonths(2).ToUniversalTime();
                 var endDate = DateTime.Today.AddMonths(3).ToUniversalTime();
 
-                _context.Tournaments.Add(new TournamentEntity
+                _ = _context.Tournaments.Add(new TournamentEntity
                 {
                     StartDate = startDate,
                     EndDate = endDate,
                     IsActive = true,
-                    LogoPath = $"~/images/Tournaments/champions.png",
+                    LogoPath = $"~/images/Tournaments/Champions.png",
                     Name = "Champions 2019/2020",
                     Groups = new List<GroupEntity>
                     {
@@ -690,13 +690,13 @@ namespace Calcio.Web.Data
                         },
                            new GroupEntity
                         {
-                             Name = "H",
+                             Name ="H",
                              GroupDetails = new List<GroupDetailEntity>
                              {
                                  new GroupDetailEntity { Team = _context.Teams.FirstOrDefault(t => t.Name == "Valencia") },
                                  new GroupDetailEntity { Team = _context.Teams.FirstOrDefault(t => t.Name == "Chelsea") },
                                  new GroupDetailEntity { Team = _context.Teams.FirstOrDefault(t => t.Name == "Ajax") },
-                                 new GroupDetailEntity { Team = _context.Teams.FirstOrDefault(t => t.Name == "Lille") }
+                                 new GroupDetailEntity { Team = _context.Teams.FirstOrDefault(t => t.Name == "Lylle") }
                              },
                              Matches = new List<MatchEntity>
                              {
@@ -710,7 +710,7 @@ namespace Calcio.Web.Data
                                  {
                                      Date = startDate.AddDays(3).AddHours(17),
                                      Local = _context.Teams.FirstOrDefault(t => t.Name == "Ajax"),
-                                     Visitor = _context.Teams.FirstOrDefault(t => t.Name == "Lille")
+                                     Visitor = _context.Teams.FirstOrDefault(t => t.Name == "Lylle")
                                  },
                                  new MatchEntity
                                  {
@@ -721,7 +721,7 @@ namespace Calcio.Web.Data
                                  new MatchEntity
                                  {
                                      Date = startDate.AddDays(7).AddHours(17),
-                                     Local = _context.Teams.FirstOrDefault(t => t.Name == "Lille"),
+                                     Local = _context.Teams.FirstOrDefault(t => t.Name == "Lylle"),
                                      Visitor = _context.Teams.FirstOrDefault(t => t.Name == "Chelsea")
                                  },
                                  new MatchEntity
@@ -733,14 +733,14 @@ namespace Calcio.Web.Data
                                  new MatchEntity
                                  {
                                      Date = startDate.AddDays(12).AddHours(16),
-                                     Local = _context.Teams.FirstOrDefault(t => t.Name == "Lille"),
+                                     Local = _context.Teams.FirstOrDefault(t => t.Name == "Lylle"),
                                      Visitor = _context.Teams.FirstOrDefault(t => t.Name == "Valencia")
                                  },
                                  new MatchEntity
                                  {
                                      Date = startDate.AddDays(12).AddHours(16),
                                      Local = _context.Teams.FirstOrDefault(t => t.Name == "Valencia"),
-                                     Visitor = _context.Teams.FirstOrDefault(t => t.Name == "Lille")
+                                     Visitor = _context.Teams.FirstOrDefault(t => t.Name == "Lylle")
                                  },
                                   new MatchEntity
                                  {
@@ -757,7 +757,7 @@ namespace Calcio.Web.Data
                                  new MatchEntity
                                  {
                                      Date = startDate.AddDays(21).AddHours(14),
-                                     Local = _context.Teams.FirstOrDefault(t => t.Name == "Lille"),
+                                     Local = _context.Teams.FirstOrDefault(t => t.Name == "Lylle"),
                                      Visitor = _context.Teams.FirstOrDefault(t => t.Name == "Ajax")
                                  },
                                  new MatchEntity
@@ -770,7 +770,7 @@ namespace Calcio.Web.Data
                                  {
                                      Date = startDate.AddDays(12).AddHours(16),
                                      Local = _context.Teams.FirstOrDefault(t => t.Name == "Chelsea"),
-                                     Visitor = _context.Teams.FirstOrDefault(t => t.Name == "Lille")
+                                     Visitor = _context.Teams.FirstOrDefault(t => t.Name == "Lylle")
                                  }
 
                              }

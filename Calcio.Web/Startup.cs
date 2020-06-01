@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 namespace Calcio.Web
 {
     public class Startup
@@ -35,6 +34,7 @@ namespace Calcio.Web
             {
                 cfg.UseSqlServer(Configuration.GetConnectionString("CalcioConnection"));
             });
+            services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddTransient<SeedDb>();
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();

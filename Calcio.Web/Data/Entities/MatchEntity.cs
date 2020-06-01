@@ -12,10 +12,10 @@ namespace Calcio.Web.Data.Entities
         public int Id { get; set; }
 
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = false)]
         public DateTime Date { get; set; }
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = false)]
         public DateTime DateLocal => Date.ToLocalTime();
 
         public TeamEntity Local { get; set; }
@@ -23,10 +23,10 @@ namespace Calcio.Web.Data.Entities
         public TeamEntity Visitor { get; set; }
 
         [Display(Name = "Goals Local")]
-        public int GoalsLocal { get; set; }
+        public int? GoalsLocal { get; set; }
 
         [Display(Name = "Goals Visitor")]
-        public int GoalsVisitor { get; set; }
+        public int? GoalsVisitor { get; set; }
 
         [Display(Name = "Is Closed?")]
         public bool IsClosed { get; set; }
