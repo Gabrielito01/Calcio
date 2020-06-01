@@ -2,6 +2,7 @@
 using Calcio.Web.Data.Entities;
 using Calcio.Web.Helpers;
 using Calcio.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Calcio.Web.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class TeamsController : Controller
     {
         private readonly DataContext _context;

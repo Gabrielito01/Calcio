@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Calcio.Web.Data.Entities;
 using System.Threading.Tasks;
+using Calcio.Web.Models;
 
 namespace Calcio.Web.Helpers
 {
@@ -15,5 +16,9 @@ namespace Calcio.Web.Helpers
         Task AddUserToRoleAsync(UserEntity user, string roleName);
 
         Task<bool> IsUserInRoleAsync(UserEntity user, string roleName);
+        Task<SignInResult> LoginAsync(LoginViewModel model);
+
+        Task LogoutAsync();
+
     }
 }
