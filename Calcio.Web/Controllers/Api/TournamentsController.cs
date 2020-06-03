@@ -5,11 +5,10 @@ using Calcio.Web.Data.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Calcio.Web.Helpers;
-
-namespace Soccer.Web.Controllers.API
+namespace Calcio.Web.Controllers.API
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class TournamentsController : ControllerBase
     {
         private readonly DataContext _context;
