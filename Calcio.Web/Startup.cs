@@ -31,6 +31,12 @@ namespace Calcio.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/NotAuthorized";
+                options.AccessDeniedPath = "/Account/NotAuthorized";
+            });
+
             services.AddIdentity<UserEntity, IdentityRole>(cfg =>
             {
                 cfg.User.RequireUniqueEmail = true;
@@ -51,7 +57,6 @@ namespace Calcio.Web
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             services.AddDbContext<CalcioWebContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("CalcioWebContext")));
         }
@@ -71,6 +76,8 @@ namespace Calcio.Web
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
+
 
 
             app.UseMvc(routes =>
@@ -79,6 +86,8 @@ namespace Calcio.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
+
     }
 }

@@ -32,6 +32,9 @@ namespace Calcio.Web.Helpers
 
         List<TournamentResponse> ToTournamentResponse(List<TournamentEntity> tournamentEntities);
 
+        PredictionResponse ToPredictionResponse(PredictionEntity predictionEntity);
+
+        MatchResponse ToMatchResponse(MatchEntity matchEntity);
 
 
     }

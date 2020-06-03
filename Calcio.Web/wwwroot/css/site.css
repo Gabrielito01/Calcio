@@ -19,7 +19,7 @@ body {
 }
 
 /* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
+.carousel-inner .item img[src$=".jpg"] {
     width: 100%;
 }
 
