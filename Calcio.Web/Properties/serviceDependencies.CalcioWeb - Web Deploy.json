@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.Sql/servers/calciodbserver/databases/Calcio.Web_db",
+      "type": "mssql.azure",
+      "connectionId": "CalcioConnection",
+      "secretStore": "AzureAppSettings"
+    },
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.Sql/servers/calciodbserver/databases/Calcio.Web_db",
+      "type": "mssql.azure",
+      "connectionId": "CalcioWebContext",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}

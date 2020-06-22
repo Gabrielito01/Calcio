@@ -42,13 +42,16 @@ namespace Calcio.Web
 
             services.AddIdentity<UserEntity, IdentityRole>(cfg =>
             {
+              
                 cfg.User.RequireUniqueEmail = true;
                 cfg.Password.RequireDigit = false;
                 cfg.Password.RequiredUniqueChars = 0;
                 cfg.Password.RequireLowercase = false;
                 cfg.Password.RequireNonAlphanumeric = false;
                 cfg.Password.RequireUppercase = false;
-            }).AddEntityFrameworkStores<DataContext>();
+            })
+  
+                .AddEntityFrameworkStores<DataContext>();
 
             services.AddAuthentication()
                 .AddCookie()
@@ -66,6 +69,7 @@ namespace Calcio.Web
             {
                 cfg.UseSqlServer(Configuration.GetConnectionString("CalcioConnection"));
             });
+            services.AddScoped<IMatchHelper, MatchHelper>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddTransient<SeedDb>();

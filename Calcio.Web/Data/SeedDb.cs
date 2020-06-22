@@ -26,11 +26,18 @@ namespace Calcio.Web.Data
             await CheckTeamsAsync();
             await CheckTournamentsAsync();
             await CheckUserAsync("1010", "Gabriel", "Barreto", "gabrielbarreto421@gmail.com", "350 634 2747", "Via del circo", UserType.Admin);
-            await CheckUserAsync("2020", "Andres", "Barreto", "andresbarreto.8@hotmail.com", "350 634 2747", "Via del circo", UserType.User);
-            await CheckUserAsync("3030", "Gabriel", "Barreto", "barrgabbo@gmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.User);
-            await CheckUserAsync("4040", "Gabriel", "Barreto", "barrgabbo@libero.it", "350 634 2747", "Calle Luna Calle Sol", UserType.User);
+            await CheckUsersAsync();
             await CheckPreditionsAsync();
         }
+
+        private async Task CheckUsersAsync()
+        {
+            for (int i = 1; i <= 100; i++)
+            {
+                await CheckUserAsync($"100{i}", "User", $"{i}", $"user{i}@yopmail.com", "350 634 2747", "Via Lauretana", UserType.User);
+            }
+        }
+
 
         private async Task CheckPreditionsAsync()
         {
